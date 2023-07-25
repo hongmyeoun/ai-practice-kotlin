@@ -1,5 +1,6 @@
 import java.util.Stack
 
+//stackpractice의 내용을 이어받음
 //input의 i부터 순회하다가
 //i번째의 요소가 ' '이면
 //스택이 비어있지 않는 상태에서 answer에 stack.pop()을 더한다.
