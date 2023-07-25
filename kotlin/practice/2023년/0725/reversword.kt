@@ -38,3 +38,26 @@ fun reverseWord(input: String): String {
 
 reverseWord("hi hellow bye")
 reverseWord("easy")
+
+//list를 입력으로 받는 것
+import java.util.Stack
+
+fun reverseWord2(input: List<String>): String {
+    var answer = ""
+    val stack = Stack<Char>()
+    //리스트의 요소를 순회
+    for (i in input) {
+        //순회하는 요소(String)을 순회 
+        for (j in i) {
+            stack.push(j)
+        }
+        while (!stack.isEmpty()) {
+            answer += stack.pop()
+        }
+        answer += " "
+    }
+
+    return answer
+}
+
+reverseWord2(listOf("hi", "hellow", "bye"))
