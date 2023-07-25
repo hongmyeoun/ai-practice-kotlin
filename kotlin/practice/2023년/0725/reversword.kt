@@ -4,6 +4,7 @@ import java.util.Stack
 //input의 i부터 순회하다가
 //i번째의 요소가 ' '이면
 //스택이 비어있지 않는 상태에서 answer에 stack.pop()을 더한다.
+//마지막 공백이 후의 단어는 이전에 단어를 뒤집었던 방식을 사용한다. 그전에 answer에 공백을 더한다.
 
 //input으로 String을 받고, String 타입을 반환한다.
 fun reverseWord(input: String): String {
