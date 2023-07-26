@@ -59,7 +59,7 @@ fun mixAlphabet(input: Int): String {
         queue.poll()
         queue.add(queue.poll())
     }
-//    return queue.peek()
+//  return queue.peek()
     return queue.queue[0]
 }
 mixAlphabet(1)
