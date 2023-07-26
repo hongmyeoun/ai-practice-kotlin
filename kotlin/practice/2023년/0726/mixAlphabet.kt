@@ -57,8 +57,7 @@ fun mixAlphabet(input: Int): String {
 
     for (i in 1..input) {
         queue.poll()
-        val golast = queue.poll()
-        queue.add(golast)
+        queue.add(queue.poll())
     }
 //    return queue.peek()
     return queue.queue[0]
