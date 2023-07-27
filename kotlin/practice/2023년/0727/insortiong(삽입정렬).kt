@@ -17,7 +17,7 @@
  //array를 출력
 
 fun insortion(input: Array<Int>) {
-    for (i in 1 until input.size) {
+    for (i in 0 until input.size) {
 
         var indexNum = i
         val temp = input[indexNum]
@@ -35,7 +35,7 @@ fun insortion(input: Array<Int>) {
 insortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
 
 fun diInsortion(input: Array<Int>) {
-    for (i in 1 until input.size) {
+    for (i in 0 until input.size) {
 
         var indexNum = i
         val temp = input[indexNum]
