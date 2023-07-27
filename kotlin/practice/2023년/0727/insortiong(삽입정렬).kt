@@ -32,7 +32,7 @@ fun insortion(input: Array<Int>) {
     println(input.contentToString())
 }
 
-Insortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
+insortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
 
 fun diInsortion(input: Array<Int>) {
     for (i in 1 until input.size) {
@@ -49,4 +49,15 @@ fun diInsortion(input: Array<Int>) {
     }
     println(input.contentToString())
 }
-DiInsortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
+diInsortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
+
+//diInsortion 매커니즘
+/*
+[7, 2, 8, 10, 3, 1, -3, 4]
+[8, 7, 2, 10, 3, 1, -3, 4]
+[10, 8, 7, 2, 3, 1, -3, 4]
+[10, 8, 7, 3, 2, 1, -3, 4]
+[10, 8, 7, 3, 2, 1, -3, 4]
+[10, 8, 7, 3, 2, 1, -3, 4]
+[10, 8, 7, 4, 3, 2, 1, -3]
+*/
