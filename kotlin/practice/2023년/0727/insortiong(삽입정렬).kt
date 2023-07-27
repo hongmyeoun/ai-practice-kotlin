@@ -16,7 +16,7 @@
 
  //array를 출력
 
-fun Insortion(input: Array<Int>) {
+fun insortion(input: Array<Int>) {
     for (i in 1 until input.size) {
 
         var indexNum = i
@@ -34,7 +34,7 @@ fun Insortion(input: Array<Int>) {
 
 Insortion(arrayOf(7, 2, 8, 10, 3, 1, -3, 4))
 
-fun DiInsortion(input: Array<Int>) {
+fun diInsortion(input: Array<Int>) {
     for (i in 1 until input.size) {
 
         var indexNum = i
