@@ -41,3 +41,43 @@ No
 Yes
 No
 */
+
+fun vps(checkString: String) {
+
+    val checking = mutableListOf<Char>()
+    for (i in checkString) {
+        checking.add(i)
+        //다른 괄호도 추가
+        when (i) {
+            ')' -> if (checking[0] == '(') {
+                checking.removeAt(0)
+                checking.removeAt(checking.size - 1)
+            }
+            '}' -> if (checking[0] == '{') {
+                checking.removeAt(0)
+                checking.removeAt(checking.size - 1)
+            }
+            ']' -> if (checking[0] == '[') {
+                checking.removeAt(0)
+                checking.removeAt(checking.size - 1)
+            }
+        }
+    }
+    if (checking.isEmpty()) {
+        println("Yes")
+    } else {
+        //만약 괄호 안에 문자열만 남아있다면 yes를 출력
+        for(j in checking){
+            if (!(j == '(' && j == ')')){
+                //그러나 반복도중 계속  yes가 나옴
+                println("Yes")
+            }else{
+                println("No")
+            }
+        }
+        
+    }
+}
+
+vps("(Yes)")
+
