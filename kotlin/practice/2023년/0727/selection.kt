@@ -9,32 +9,36 @@
 //list.size-2번째 인덱스 부터 마지막 인덱스 까지 최소값을 찾아낸다
 //만약 최소값이 더 작다면 list.size-2번째 인덱스와 최소값의 위치를 바꾼다.
 //list[i] -> for(i in 1 until list.size)
-//최소값을 찾아내는 것. list 메소드를 이용하자
+//최소값과 순환중인 리스트목록을 비교
+//최소값이 더 작다면
+//최소값을 temp에 저장
+//최소값에 input[i]를 저장
+//input[i]에 temp값을 저장
+//최소값은 한번 쓰이면 없어져야된다. 이부분이 안됨 현재
+
 val list = mutableListOf<Int>(10, 4, 2, 1, 7)
 
-selection(list)
 fun selection(input: MutableList<Int>) {
-
-    for (i in 0 until input.size) {
-        var minIndex = 0
-        if (input[i] < input[minIndex]) {
-            minIndex = i
+    val sortedList = input
+    var minIndex = 0
+    println(sortedList)
+    for (j in 0 until sortedList.size) {
+        
+        for (i in 0 until sortedList.size) {
+            
+            if (sortedList[i] < sortedList[minIndex]) {
+                minIndex = i
+            }
+            println(minIndex)
+        }
+        if (sortedList[j] > sortedList[minIndex]) {
+            val temp = sortedList[minIndex]
+            sortedList[minIndex] = sortedList[j]
+            sortedList[j] = temp
         }
 
+        println(sortedList)
     }
-//        for (j in 0 until input.size) {
-//            if (j > 0 && minIndex < input[j]) {
-//                input[j] = minIndex
-//            }
-//        }
-//
-//    println(input)
-}
 
-////list에서 1번째 인덱스 부터 마지막 인덱스 에서
-//var minIndex = 0
-//for (i in 0 until list.size) {
-//    if (list[i] < list[minIndex]) {
-//        minIndex = i // 현재 요소가 최소값보다 작다면 최소값의 인덱스를 업데이트
-//    }
-//}
+}
+selection(list)
