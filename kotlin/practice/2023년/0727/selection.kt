@@ -25,7 +25,6 @@ val list = mutableListOf<Int>(10, 4, 2, 1, 7)
 
 fun selection(input: MutableList<Int>) {
     var minIndex = 0
-    println(input)
     for (currentIndex in 0 until input.size) {
         minIndex = currentIndex
         //j는 0부터 반복 i는 1부터 시작 =>근데 i의 두번째 시작은 2, 3번쨰는 3이여야됨
@@ -40,7 +39,6 @@ fun selection(input: MutableList<Int>) {
             if (input[i] < input[minIndex]) {
                 minIndex = i
             }
-            println("$currentIndex  $minIndex")
         }
         //이부분의 조건을 바꿔야 될까
         if (input[currentIndex] > input[minIndex]) {
@@ -48,34 +46,26 @@ fun selection(input: MutableList<Int>) {
             input[minIndex] = input[currentIndex]
             input[currentIndex] = temp
         }
-
-        println(input)
     }
-
+    println(input)
 }
 selection(list)
 
 fun downselection(input: MutableList<Int>) {
     var maxIndex = 0
-    println(input)
     for (currentIndex in 0 until input.size) {
         maxIndex = currentIndex
-
         for (i in currentIndex + 1 until input.size) {
-
             if (input[i] > input[maxIndex]) {
                 maxIndex = i
             }
-            println("$currentIndex  $maxIndex")
         }
         if (input[currentIndex] < input[maxIndex]) {
             val temp = input[maxIndex]
             input[maxIndex] = input[currentIndex]
             input[currentIndex] = temp
         }
-
-        println(input)
     }
-
+    println(input)
 }
 downselection(list)
