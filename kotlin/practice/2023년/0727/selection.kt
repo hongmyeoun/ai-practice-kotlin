@@ -54,3 +54,28 @@ fun selection(input: MutableList<Int>) {
 
 }
 selection(list)
+
+fun downselection(input: MutableList<Int>) {
+    var maxIndex = 0
+    println(input)
+    for (currentIndex in 0 until input.size) {
+        maxIndex = currentIndex
+
+        for (i in currentIndex + 1 until input.size) {
+
+            if (input[i] > input[maxIndex]) {
+                maxIndex = i
+            }
+            println("$currentIndex  $maxIndex")
+        }
+        if (input[currentIndex] < input[maxIndex]) {
+            val temp = input[maxIndex]
+            input[maxIndex] = input[currentIndex]
+            input[currentIndex] = temp
+        }
+
+        println(input)
+    }
+
+}
+downselection(list)
