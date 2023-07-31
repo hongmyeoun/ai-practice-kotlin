@@ -8,6 +8,38 @@
 //나머지는 rightlist가됨
 //요소가 하나가 될 때 까지 반복
 //다 나눴다.
+
+//이런식으로 리스트들을 병합
+//마지막 list를 출력
+
+
+val list = mutableListOf<Int>(10, 4, 2, 1, 7, 3, 13, 5)
+//list를 2로 나눈값까지 새 리스트에 저장
+fun listdivider(input: List<Int>): List<Int>{
+    if (input.size < 2) {
+        return input
+    }
+    val mid = input.size / 2
+    val leftList = mutableListOf<Int>()
+    val rightList = mutableListOf<Int>()
+    for (i in 0 until input.size) {
+        if (i < mid) {
+            //1. 10,4,2,1
+            leftList.add(input[i])
+        } else {
+            //1. 7,3,13,5
+            rightList.add(input[i])
+        }
+    }
+    //1. 10,4,2,1
+    val leftDivided = leftList
+    //1. 7,3,13,5
+    val rightDivided = rightList
+    //한번 나눈 list를 병합
+    println("$leftDivided $rightDivided")
+    return merge(leftDivided, rightDivided)
+}
+println(listdivider(list))
 //리스트를 합치기 전에
 //0번과 1번의 크기를 비교
 //크기순으로 크기가 2인 리스트에 추가
@@ -18,123 +50,50 @@
 //남은거 비교 작은거 list3에 2번에 저장
 //남은거 list3에 3번에 저장
 //나머지 반복
-//이런식으로 리스트들을 병합
-//마지막 list를 출력
 
+//println(merge(listOf(10,4),listOf(2,1)))
+fun merge(left: List<Int>, right: List<Int>): List<Int> {
+    //왼쪽의 0번째와 오른쪽의 0번째 크기비교
+    //작은쪽이 새로운 정렬된 리스트에 먼저 저장됨
+    //2개 2개일때
+    //왼쪽 0번과 오른쪽 0번 비교
+    //왼쪽이 더 작으면 왼쪽을 add
+    //그리고 왼쪽1번과 오른쪽 0번비교
+    //오른쪽이 더 작으면 오른쪽0번 add
+    //그리고 왼쪽 1번과 오른쪽 1번 비교
+    //왼쪽1번이 더 작으면 왼쪽1번 add, 오른쪽1번 add
 
-//fun divideList(input: List<Int>): List<Any> {
-//    val test: MutableList<Int> = input as MutableList<Int>
-//    if (input.size <= 1) {
-//        return listOf(input)
-//    }
-//    for(i in 0..(input.size-1)/2){
-//        val left = test.add(test.removeAt(i))
-//    }
-//    val right = test
-//
-//}
-val list = mutableListOf<Int>(10, 4, 2, 1, 7, 3, 13, 5)
+    //index는 0부터 왼쪽,오른쪽 둘다
+    //index는 0부터 2까지
+    //왼쪽[index]<오른쪽[index] == true
+    //new.add(왼쪽[index]), index++
+    //왼쪽[index]<오른쪽[index] == false
+    //new.add(오른쪽[index]), index++
+    val mergeSortList = mutableListOf<Int>()
+    var leftIndex = 0
+    var rightIndex = 0
 
-var mid = list.size / 2
-var L = list.subList(0, mid)
-var R = list.subList(mid, list.size)
+    //left[10,4,2,1] right[7,3,13,5]
 
-println("$L $R")
+    while (leftIndex < left.size && rightIndex < right.size){
+        if(left[leftIndex] < right[rightIndex]){
+            mergeSortList.add(left[leftIndex])
+            leftIndex++
+        }else{
+            mergeSortList.add(right[rightIndex])
+            rightIndex++
+        }
+    }
 
-var LM = L.size / 2
-var LL = L.subList(0, LM)
-var LR = L.subList(LM, L.size)
+    while (leftIndex < left.size) {
+        mergeSortList.add(left[leftIndex])
+        leftIndex++
+    }
 
-var RM = R.size / 2
-var RL = R.subList(0, RM)
-var RR = R.subList(RM, R.size)
+    while (rightIndex < right.size) {
+        mergeSortList.add(right[rightIndex])
+        rightIndex++
+    }
 
-println("$LL $LR $RL $RR")
-
-var LLM = LL.size / 2
-var LLL = LL.subList(0, LLM)
-var LLR = LL.subList(LLM, LL.size)
-
-var LRM = LR.size / 2
-var LRL = LR.subList(0, LRM)
-var LRR = LR.subList(LRM, LL.size)
-
-var RRM = RR.size / 2
-var RRL = RR.subList(0, RRM)
-var RRR = RR.subList(RRM, RR.size)
-
-var RLM = RL.size / 2
-var RLL = RL.subList(0, RLM)
-var RLR = RL.subList(RLM, RL.size)
-
-println("$LLL $LLR $LRL $LRR $RLL $RLR $RLL $RLR")
-
-//LLL[0]=10, LLR[0]=4
-//10 > 4
-val newLL = mutableListOf<Int>()
-if (LLL[0] > LLR[0]){
-    //[4, 10]
-    newLL.add(LLR[0])
-    newLL.add(LLL[0])
-}else{
-    newLL.add(LLL[0])
-    newLL.add(LLR[0])
-}
-println(newLL)
-
-val newLR = mutableListOf<Int>()
-if (LRL[0] > LRR[0]){
-    newLR.add(LRR[0])
-    newLR.add(LRL[0])
-}else{
-    newLR.add(LRL[0])
-    newLR.add(LRR[0])
-}
-println(newLR)
-
-val newL = mutableListOf<Int>()
-
-println(newL)
-//
-//if (LL[0] > LR[0]){
-//    val temp = LL[0]
-//    LL[0] = LR[0]
-//    LR[0] = temp
-//}else{
-//    val temp = LR[0]
-//    LR[0] = LL[0]
-//    LL[0] = temp
-//}
-//if (LL[0] > LR[1]){
-//    val temp = LL[0]
-//    LL[0] = LR[1]
-//    LR[1] = temp
-//}else{
-//    val temp = LR[1]
-//    LR[1] = LL[0]
-//    LL[0] = temp
-//}
-//if (LL[1] > LR[0]){
-//    val temp = LL[1]
-//    LL[1] = LR[0]
-//    LR[0] = temp
-//}else{
-//    val temp = LR[0]
-//    LR[0] = LL[1]
-//    LL[1] = temp
-//}
-//if (LL[1] > LR[1]){
-//    val temp = LL[1]
-//    LL[1] = LR[1]
-//    LR[1] = temp
-//}else{
-//    val temp = LR[1]
-//    LR[1] = LL[1]
-//    LL[1] = temp
-//}
-//L = merge(LL,LR) as MutableList<Int>
-//println(L)
-
-fun merge(list1: List<Int>, list2: List<Int>): List<Int>{
-    return list1 + list2
+    return mergeSortList
 }
