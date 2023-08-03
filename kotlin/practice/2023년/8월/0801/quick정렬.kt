@@ -11,5 +11,60 @@
 //left=[1] right=[4,6]
 //[4],6
 //left=[] right=[6]
+
+//left=[1] + pivot=[3] + right=[4,6]
 //[1] [3] [4,6]
+//left[1,3,4,6] + pivot=[7] + right=[8]
 //[1,3,4,6] [7] [8]
+
+//list를 pivot을 정해서 왼쪽으로는 pivot보다 작은수들의 리스트, 오른쪽은 pivot보다 큰수의 리스트로 쪼개기
+//pivot을 index/2로 잡는다
+
+
+val list = mutableListOf<Int>(8, 4, 7, 3, 1, 6)
+quickDivide(list)
+fun quickDivide(input: List<Int>): List<Int> {
+    val pivotIndex = input.size / 2
+    val left = mutableListOf<Int>()
+    val pivot = mutableListOf<Int>()
+    val right = mutableListOf<Int>()
+
+    if (input.size < 2) {
+        return input
+    }
+
+    //list의 pivotIndex의 있는 값보다 크기가 작은 값들이 나오면
+    //left 리스트에 add
+    //아니면 right에 add
+    for (index in 0 until input.size) {
+        if (input[index] < input[pivotIndex]) {
+            left.add(input[index])
+        } else {
+            right.add(input[index])
+        }
+    }
+    pivot.add(input[pivotIndex])
+
+    val dividedLeft = quickDivide(left)
+    val dividedRight = quickDivide(right)
+
+    return merge(dividedLeft, pivot, dividedRight)
+}
+
+fun merge(left: List<Int>, pivot: List<Int>, right: List<Int>): List<Int> {
+    //left + pivot + right 이렇게 반복
+    val mergeList = mutableListOf<Int>()
+
+    for (index in 0 until left.size) {
+        mergeList.add(left[index])
+    }
+    for (index in 0 until pivot.size) {
+        mergeList.add(pivot[index])
+    }
+    for (index in 0 until right.size) {
+        mergeList.add(right[index])
+    }
+
+    return mergeList
+}
+
