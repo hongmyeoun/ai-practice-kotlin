@@ -217,3 +217,24 @@ val db = remember {
     ).build()
 }
 이렇게 버전 업을 추가한다.
+
+이게 Migration이다
+
+Migration
+1. User의 data class에서 추가로 @ColumnInfo를 만들고
+2. AppDatabase에 가서 
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE User ADD COLUMN phone TEXT")
+        database.execSQL("ALTER TABLE User ADD COLUMN email TEXT")
+        database.execSQL("ALTER TABLE User ADD COLUMN age INTEGER")
+        }
+    }
+    이거 하는거
+3. mainactivity에서 db에 addMigrations하기
+        val db = remember {
+            Room.databaseBuilder(
+                context,
+                AppDatabase::class.java, "contacts.db"
+            ).addMigrations(MIGRATION_1_2).build()
+        }
