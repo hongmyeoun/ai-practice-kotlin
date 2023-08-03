@@ -204,7 +204,8 @@ fun NumCountText(count: Int) {
 fun shareEdit(sharedPref: SharedPreferences?, count: Int) {
     sharedPref?.edit {
         putInt("counter", count)
-        apply()
+        //edit람다식은 apply가 자동처리됨
+//        apply()
     }
 }
 
