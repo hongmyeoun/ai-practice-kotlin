@@ -22,6 +22,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.starbuckscopyapp0804.ui.theme.StarbucksCopyApp0804Theme
 
 class MainActivity : ComponentActivity() {
@@ -52,29 +54,14 @@ fun Main() {
             modifier = Modifier.verticalScroll(scrollState)
         ) {
             Top()
-            Menu(R.drawable.ice_amer, "아이스 카페 아메리카노", "Iced Caffe Americano", "4500원")
-            Menu(R.drawable.cafe_latte, "아이스 카페 라떼", "Iced Caffe Latte", "5000원")
-            Menu(R.drawable.sea_salt, "씨솔트 카라멜 콜드 브루", "Sea Salt Caramel Cold Brew", "6300원")
-            Menu(R.drawable.ja_mong, "아이스 자몽 허니 블랙 티", "Iced Grapefruit Honey Black Tea", "5700원")
-            Menu(R.drawable.cold_brew, "콜드 브루", "Cold Brew", "6900원")
-            Menu(R.drawable.cafe_moca, "카페 모카", "Caffe Mocha", "6500원")
-            Menu(R.drawable.raben_der, "라벤더 카페 브레베", "Lavender Cafe Breve", "7700원")
-            Menu(R.drawable.the_green, "더 그린 쑥 크림 라떼", "The Green Mugwart Cream Latte", "8000원")
-        }
-    }
-}
-
-//@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    StarbucksCopyApp0804Theme {
-        Column {
-            Top()
-            Menu(R.drawable.ice_amer, "아이스 카페 아메리카노", "Iced Caffe Americano", "4500원")
-//            Menu(R.drawable.cafe_latte, "아이스 카페 라떼", "Iced Caffe Latte", "5000원")
-//            Menu()
-//            Menu()
-//            Menu()
+            Menu(R.drawable.ice_amer, "아이스 카페 아메리카노", "Iced Caffe Americano", "4,500원")
+            Menu(R.drawable.cafe_latte, "아이스 카페 라떼", "Iced Caffe Latte", "5,000원")
+            Menu(R.drawable.sea_salt, "씨솔트 카라멜 콜드 브루", "Sea Salt Caramel Cold Brew", "6,300원")
+            Menu(R.drawable.ja_mong, "아이스 자몽 허니 블랙 티", "Iced Grapefruit Honey Black Tea", "5,700원")
+            Menu(R.drawable.cold_brew, "콜드 브루", "Cold Brew", "6,900원")
+            Menu(R.drawable.cafe_moca, "카페 모카", "Caffe Mocha", "6,500원")
+            Menu(R.drawable.raben_der, "라벤더 카페 브레베", "Lavender Cafe Breve", "7,700원")
+            Menu(R.drawable.the_green, "더 그린 쑥 크림 라떼", "The Green Mugwart Cream Latte", "8,000원")
         }
     }
 }
@@ -85,20 +72,21 @@ fun Top() {
         Column {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                 ) {
-                    Text("<", color = Color.Black)
+                    Text("<", color = Color.Black, fontSize = 25.sp)
                 }
-                Text("추천")
+                Text("추천", fontSize = 25.sp)
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                 ) {
-                    Text("🔍")
+                    Text("🔍", fontSize = 25.sp)
                 }
             }
             Divider()
@@ -115,8 +103,8 @@ fun Menu(imageResId: Int, coffeeName: String, engName: String, price: String) {
         Button(
             onClick = {
                 val intent = Intent(context, CoffeInfoPage::class.java)
-                intent.putExtra("CoffeName", coffeeName)
-                intent.putExtra("isHot", engName)
+                intent.putExtra("coffeeName", coffeeName)
+                intent.putExtra("EngName", engName)
                 intent.putExtra("Price", price)
                 intent.putExtra("ImageID",imageResId)
                 context.startActivity(intent)
@@ -141,7 +129,7 @@ fun Menu(imageResId: Int, coffeeName: String, engName: String, price: String) {
                     modifier = Modifier.fillMaxHeight()
                 ) {
                     Text(text = coffeeName, color = Color.Black)
-                    Text(text = engName, color = Color.Black)
+                    Text(text = engName, color = Color.LightGray, fontSize = 12.sp)
                     Text(text = price, color = Color.Black)
                 }
             }
