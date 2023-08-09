@@ -17,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -26,10 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.example.mlkitpractice.ui.theme.MlkitPracticeTheme
 import com.google.mlkit.vision.common.InputImage
@@ -52,7 +51,7 @@ class ImageTextTR : ComponentActivity() {
                 )
                 var textRecognized by remember { mutableStateOf("") }
                 var image: InputImage
-                val clipboardManager = LocalClipboardManager.current
+                val context = LocalContext.current
 
                 Row {
                     Column {
@@ -94,7 +93,28 @@ class ImageTextTR : ComponentActivity() {
                                     .addOnSuccessListener { visionText ->
                                         // Task completed successfully
                                         // ...
-                                        textRecognized = visionText.text
+//                                        textRecognized = visionText.text
+                                        //val resultText = result.text
+                                        val combinedText = StringBuilder()
+
+                                        for (block in visionText.textBlocks) {
+                                            for (line in block.lines) {
+                                                for (element in line.elements) {
+                                                    val elementText = element.text
+                                                    combinedText.append(elementText).append(" ")
+                                                }
+                                            }
+                                        }
+
+                                        val finalText = combinedText.toString().trim() // 앞뒤 공백 제거
+                                        textRecognized = finalText
+//                                        val intent = Intent(context, MainActivity::class.java)
+//                                        intent.putExtra("textRecognized", textRecognized)
+//                                        setResult(RESULT_OK,intent)
+//                                        finish()
+
+                                        // 다른 Activity를 실행합니다.
+//                                        launcher.
                                     }
                                     .addOnFailureListener { e ->
                                         // Task failed with an exception
@@ -122,15 +142,19 @@ class ImageTextTR : ComponentActivity() {
                             )
                         }
                         Button(onClick = {
-                            if (textRecognized.isNotEmpty()) {
-                                val annotatedString = AnnotatedString(textRecognized)
-                                clipboardManager.setText(annotatedString) // Copy text to clipboard
-                            }
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.putExtra("textRecognized", textRecognized)
+                            setResult(RESULT_OK,intent)
+                            finish()
                         }) {
                             Text(text = "복사")
                         }
                     }
-                    Text(text = textRecognized)
+                    LazyColumn() {
+                        item {
+                            Text(text = textRecognized)
+                        }
+                    }
                 }
             }
         }

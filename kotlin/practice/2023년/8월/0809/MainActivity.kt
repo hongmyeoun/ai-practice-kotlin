@@ -1,9 +1,12 @@
 package com.example.mlkitpractice
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,8 +58,16 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreen() {
-
     var viewString by remember { mutableStateOf("") }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewString = result.data?.getStringExtra("textRecognized") ?: ""
+            }
+        }
+    )
+
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
 
@@ -173,7 +184,7 @@ fun MainScreen() {
                 Spacer(modifier = Modifier.size(10.dp))
                 Button(onClick = {
                     val intent = Intent(context, ImageTextTR::class.java)
-                    context.startActivity(intent)
+                    launcher.launch(intent)
                 }) {
                     Text(text = "이미지 번역")
                 }
