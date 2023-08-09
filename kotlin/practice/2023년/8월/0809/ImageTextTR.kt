@@ -44,7 +44,6 @@ class ImageTextTR : ComponentActivity() {
                 var selectUri by remember { mutableStateOf<Uri?>(null) }
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.PickVisualMedia(),
-                    //url == 유니크한 경로
                     onResult = { uri ->
                         selectUri = uri
                     }
@@ -57,8 +56,6 @@ class ImageTextTR : ComponentActivity() {
                     Column {
                         selectUri?.let {
                             val context = LocalContext.current
-                            //버전이 낮은건 else를 실행한다
-                            //ImageDecoder쪽을 복사하고 else todo랑 같이 검색하면됨
                             val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                                 ImageDecoder.decodeBitmap(
                                     ImageDecoder.createSource(
@@ -91,10 +88,8 @@ class ImageTextTR : ComponentActivity() {
 
                                 val result = recognizer.process(image)
                                     .addOnSuccessListener { visionText ->
-                                        // Task completed successfully
-                                        // ...
-//                                        textRecognized = visionText.text
-                                        //val resultText = result.text
+                                        //이미지로 인식한 텍스트는 텍스트 박스임 그래서 이상하게 줄이바뀌거나 그런현상이 있음
+                                        //그것을 한줄로 바꿔주는 부분 시작
                                         val combinedText = StringBuilder()
 
                                         for (block in visionText.textBlocks) {
@@ -105,16 +100,12 @@ class ImageTextTR : ComponentActivity() {
                                                 }
                                             }
                                         }
-
                                         val finalText = combinedText.toString().trim() // 앞뒤 공백 제거
+                                        //여기까지 한줄로 바꾸는 작업
+                                        //이건 인식한 텍스트를 한줄텍스트로 바꾼것을
+                                        //변수에 저장 136줄 버튼에서 MainActivity로 넘겨줄 예정
                                         textRecognized = finalText
-//                                        val intent = Intent(context, MainActivity::class.java)
-//                                        intent.putExtra("textRecognized", textRecognized)
-//                                        setResult(RESULT_OK,intent)
-//                                        finish()
 
-                                        // 다른 Activity를 실행합니다.
-//                                        launcher.
                                     }
                                     .addOnFailureListener { e ->
                                         // Task failed with an exception
@@ -142,9 +133,12 @@ class ImageTextTR : ComponentActivity() {
                             )
                         }
                         Button(onClick = {
+                            //버튼이 눌렸을때 intent를 MainActivity로 넘겨줌
                             val intent = Intent(context, MainActivity::class.java)
                             intent.putExtra("textRecognized", textRecognized)
+                            //기존에 사용하던 context.startActivitiy(intent)가 아니라 결과를 넘겨주면서 activity를 닫아버리는 것임
                             setResult(RESULT_OK,intent)
+                            //finish를 통해 엑티비티 종료 -> 복사버튼을 누르면 mainactivity에 인식한 텍스트를 옮겨줌
                             finish()
                         }) {
                             Text(text = "복사")
