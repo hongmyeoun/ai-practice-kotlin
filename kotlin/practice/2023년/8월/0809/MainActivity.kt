@@ -59,18 +59,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     var viewString by remember { mutableStateOf("") }
+    //다른 엑티비티에서 인식한 텍스트를 받아오는 부분
     val launcher = rememberLauncherForActivityResult(
+        //엑티비티가 시작되면서 정보를 받아옴(?)
         contract = ActivityResultContracts.StartActivityForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+                //viewString은 textfield에 입력하는 값 => 이미지에서 인식한 텍스트를 바로 텍스트 필드에 넣어줌
                 viewString = result.data?.getStringExtra("textRecognized") ?: ""
             }
         }
     )
 
+    //클립보드
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
 
+    //함수로 빼고 리스트처리
     val koEn = remember {
         val options = TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.KOREAN)
             .setTargetLanguage(TranslateLanguage.ENGLISH).build()
@@ -103,30 +108,27 @@ fun MainScreen() {
         Translation.getClient(options)
     }
     var enabled by remember { mutableStateOf(false) }
-    //다운로드는 한번만 하면된다 그래서 사용하는 것
+    //다운로드는 한번만 하면된다 그래서 사용하는 것, 사용언어가 한글, 영어, 일본어 3개 다운로드
     LaunchedEffect(Unit) {
         val conditions = DownloadConditions.Builder().requireWifi().build()
         enKo.downloadModelIfNeeded(conditions).addOnSuccessListener {
-            // Model downloaded successfully. Okay to start translating.
-            // (Set a flag, unhide the translation UI, etc.)
+           
             enabled = true
         }.addOnFailureListener { exception ->
-            // Model couldn’t be downloaded or other internal error.
-            // ...
+            
         }
         enJp.downloadModelIfNeeded(conditions).addOnSuccessListener {
-            // Model downloaded successfully. Okay to start translating.
-            // (Set a flag, unhide the translation UI, etc.)
+            //이부분 enKo랑 같은데 다른 enabled로 설정해줘야됨
             enabled = true
         }.addOnFailureListener { exception ->
-            // Model couldn’t be downloaded or other internal error.
-            // ...
+            
         }
     }
 
     var textTranslated by remember { mutableStateOf("") }
     var isTrans by remember { mutableStateOf(false) }
 
+    //여기서부터 레이아웃
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -151,6 +153,7 @@ fun MainScreen() {
                     .border(1.dp, color = Color.Black)
 
             ) {
+                //통역버튼을 누르게 되면 실행이되는 부분
                 if (isTrans) {
                     Box(modifier = Modifier.padding(start = 10.dp, top = 10.dp)) {
                         LazyColumn() {
@@ -161,12 +164,14 @@ fun MainScreen() {
                     }
                 } else {
                     Box(modifier = Modifier.padding(start = 10.dp, top = 10.dp, end = 10.dp)) {
+                        //만약 취소버튼을 누르게 되면 초기화면이 뜨는 것
                         Text(text = "글을 쓰고 원하는 통역 버튼을 눌러주세요~!!😊")
                     }
                 }
             }
             Row(horizontalArrangement = Arrangement.Center) {
                 Button(onClick = {
+                    //클릭 했을시 TextField에 있는 모든값을 지움
                     isTrans = false
                     viewString = ""
                 }) {
@@ -174,6 +179,7 @@ fun MainScreen() {
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Button(onClick = {
+                    //번역된 텍스트를 clipboard에 복사는 코드
                     if (textTranslated.isNotEmpty()) {
                         val annotatedString = AnnotatedString(textTranslated)
                         clipboardManager.setText(annotatedString) // Copy text to clipboard
@@ -183,7 +189,9 @@ fun MainScreen() {
                 }
                 Spacer(modifier = Modifier.size(10.dp))
                 Button(onClick = {
+                    //기존에 사용하던 intent
                     val intent = Intent(context, ImageTextTR::class.java)
+                    //context.starthActivity와 동일하게 ImageTextTR엑티비티를 띄어줌
                     launcher.launch(intent)
                 }) {
                     Text(text = "이미지 번역")
