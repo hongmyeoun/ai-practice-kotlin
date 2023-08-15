@@ -13,3 +13,7 @@
 9. font.xml 들어가기
 10. <font android:font="@font/폰트이름"/> font-family 사이에 넣기
 11. fontFamily = FontFamily(Font(R.font.폰트이름)) 으로 사용하기
+
+여러개를 넣고싶다??
+
+4, 9, 10번만 하면됩니다.
