@@ -19,6 +19,10 @@
 //글을 쓰다 음성인식이 들어오면 자동으로 한칸 뛰어졌으면 좋겠어서 spaceBar라는 변수를 만들고 어쩌구 해봤지만
 //그냥 recog를 처음받는 부분에 " "를 넣어주면 되었다. 어쩌피 String
 
+//다섯번째 문제
+//혹시 만약 진짜루 이 textfield값을 db에 저장한다거나 어딘가에 사용하려하면
+//음성인식 이후 recog가 초기화 되면 저장버튼, 또는 보여주기 버튼을 활성화 시켜야한다. 그렇지 않으면 음성인식부분은 날라간다.
+
 package com.example.voicetotextpractice
 
 import android.content.Intent
