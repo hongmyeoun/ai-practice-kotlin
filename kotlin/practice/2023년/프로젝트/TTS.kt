@@ -41,14 +41,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             Testttt1Theme {
                 val context = LocalContext.current
-                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(text = "이걸 읽을 거야!!")
-                TTSComponent("이걸 읽을 거야!!", textToSpeech)
+                    TTSComponent("이걸 읽을 거야!!", textToSpeech)
                 }
 
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         textToSpeech.stop()
