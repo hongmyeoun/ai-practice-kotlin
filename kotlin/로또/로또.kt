@@ -6,6 +6,10 @@ import camp.nextstep.edu.missionutils.Randoms
 fun main() {
 //    TODO("프로그램 구현")
 
+
+    //inputPrice함수
+        //입력
+        //예외처리
     var validInput = false
     var price = 0
 
@@ -27,10 +31,21 @@ fun main() {
             println("[ERROR] 구매 금액은 1,000원 단위 입니다!!")
         }
     }
+    
+    //return price
 
+    //TicketCount함수
+        //price를 입력받음
+        //TicketCount를 반환
     val totalLottoCount = price / 1000
+
+    //return totlaLottoCunt
     println("\n${totalLottoCount}개를 구매했습니다.")
 
+
+    //TicketMaker함수
+        //입력 TicketCount
+        //출력 lottoList
     val lottoList = mutableListOf<List<Int>>()
     for (i in 0 until totalLottoCount) {
         val lottoNumber = Randoms.pickUniqueNumbersInRange(1, 45, 7).sorted()
@@ -39,7 +54,13 @@ fun main() {
         val printLottoNumber = lottoNumber.subList(0, 6)
         println(printLottoNumber)
     }
+    //return lottoList
 
+
+    //getLottoNumber함수
+        //입력
+        //예외처리
+        //출력 => lottoNumber
     var valideInput2 = false
     var lottoNumbers: List<Int> = emptyList()
 
@@ -75,10 +96,17 @@ fun main() {
     }
 
     lottoNumbers = lottoNumbers.sorted().toMutableList()
+
+    //return lottoNumber
     println(lottoNumbers)
 
     val lotto = Lotto(lottoNumbers)
 
+
+    //getBonusNumber함수
+        //입력 => lottoNumber
+        //예외처리
+        //출력 => 
     var validInput3 = false
     var bonusNumber = 0
 
@@ -108,7 +136,9 @@ fun main() {
         }
     }
 
+    //return bonusNumber
     println(bonusNumber)
+    
 
     lotto.lottoLogic(lottoList, price)
 
